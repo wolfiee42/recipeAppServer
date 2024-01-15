@@ -36,11 +36,19 @@ const dbConnet = async () => {
 dbConnet();
 
 
+const recipeCollection = client.db("YumSyncRecipes").collection("recipes");
 
 
 app.get("/", (req, res) => {
     res.send("Recipe server is cooking.")
 });
+
+app.post('/recipes', async (req, res) => {
+    const recipe = req.body;
+    const result = await recipeCollection.insertOne(recipe);
+    res.send(result);
+})
+
 
 app.listen(port, () => {
     console.log(`Recipe server is cooking at port ${port}`);
