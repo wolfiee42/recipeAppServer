@@ -1,6 +1,6 @@
 const express = require('express');
 require("dotenv").config();
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const cors = require('cors');
 
 const app = express();
@@ -55,6 +55,13 @@ app.get('/allrecipes', async (req, res) => {
     res.send(result);
 });
 
+
+app.get("/:id", async (req, res) => {
+    const id = req.params.id;
+    const filter = { _id: new ObjectId(id) }
+    const result = await recipeCollection.findOne(filter);
+    res.send(result);
+})
 
 app.listen(port, () => {
     console.log(`Recipe server is cooking at port ${port}`);
