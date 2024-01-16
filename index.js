@@ -47,7 +47,13 @@ app.post('/recipes', async (req, res) => {
     const recipe = req.body;
     const result = await recipeCollection.insertOne(recipe);
     res.send(result);
-})
+});
+
+
+app.get('/allrecipes', async (req, res) => {
+    const result = await recipeCollection.find().toArray();
+    res.send(result);
+});
 
 
 app.listen(port, () => {
