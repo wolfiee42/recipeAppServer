@@ -63,6 +63,13 @@ app.get("/:id", async (req, res) => {
     res.send(result);
 })
 
+app.delete("/:id", async (req, res) => {
+    const id = req.params.id;
+    const filter = { _id: new ObjectId(id) };
+    const result = await recipeCollection.deleteOne(filter);
+    res.send(result);
+})
+
 app.listen(port, () => {
     console.log(`Recipe server is cooking at port ${port}`);
 })
