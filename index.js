@@ -70,6 +70,24 @@ app.delete("/:id", async (req, res) => {
     res.send(result);
 })
 
+app.put('/:id', async (req, res) => {
+    const id = req.params.id;
+    const filter = { _id: new ObjectId(id) };
+    const recipe = req.body;
+    const options = { upsert: true }
+    const updatedDoc = {
+        $set: {
+            recipeName: recipe.recipeName,
+            instruction: recipe.instruction,
+            recipeImage: recipe.recipeImage,
+            ingridients: recipe.ingridients
+        }
+    }
+    const result = await recipeCollection.updateOne(filter, updatedDoc, options);
+    res.send(result);
+
+})
+
 app.listen(port, () => {
     console.log(`Recipe server is cooking at port ${port}`);
 })
