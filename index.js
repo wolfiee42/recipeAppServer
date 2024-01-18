@@ -58,6 +58,11 @@ app.get('/allrecipes', async (req, res) => {
         query = {
             recipeName: {
                 $regex: search,
+                $options: "i"
+            },
+            instruction: {
+                $regex: search,
+                $options: "i"
             },
         }
     }
