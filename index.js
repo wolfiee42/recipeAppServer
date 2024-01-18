@@ -51,7 +51,17 @@ app.post('/recipes', async (req, res) => {
 
 
 app.get('/allrecipes', async (req, res) => {
-    const result = await recipeCollection.find().toArray();
+    const { search } = req.query;
+
+    let query = {};
+    if (search) {
+        query = {
+            recipeName: {
+                $regex: search,
+            },
+        }
+    }
+    const result = await recipeCollection.find(query).toArray();
     res.send(result);
 });
 
